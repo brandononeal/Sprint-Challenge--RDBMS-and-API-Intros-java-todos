@@ -1,6 +1,8 @@
 package com.lambdaschool.todos;
 
 import com.lambdaschool.todos.models.User;
+import com.lambdaschool.todos.models.UserTodos;
+import com.lambdaschool.todos.services.TodoService;
 import com.lambdaschool.todos.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -23,6 +25,9 @@ public class SeedData implements CommandLineRunner
     @Autowired
     UserService userService;
 
+    @Autowired
+    TodoService todoService;
+
     /**
      * Generates test, seed data for our application
      * First a set of known data is seeded into our database.
@@ -40,35 +45,33 @@ public class SeedData implements CommandLineRunner
                            "password",
                            "admin@lambdaschool.local");
         u1.getTodos()
-                .add(new Todos(u1,
-                               "Give Joe access rights"));
+                .add(new UserTodos(u1,
+                               "Give Joe access rights", false));
         u1.getTodos()
-                .add(new Todos(u1,
-                               "Change the color of the home page"));
-
+                .add(new UserTodos(u1,
+                               "Change the color of the home page", false));
         userService.save(u1);
 
         User u2 = new User("cinnamon",
                            "1234567",
                            "cinnamon@lambdaschool.local");
         u2.getTodos()
-                .add(new Todos(u2,
-                               "Take a nap"));
+                .add(new UserTodos(u2,
+                               "Take a nap", false));
         u2.getTodos()
-                .add(new Todos(u2,
-                               "Rearrange my hutch"));
+                .add(new UserTodos(u2,
+                               "Rearrange my hutch", false));
         u2.getTodos()
-                .add(new Todos(u2,
-                               "Groom my fur"));
+                .add(new UserTodos(u2,
+                               "Groom my fur", false));
         userService.save(u2);
 
-        // user
         User u3 = new User("barnbarn",
                            "ILuvM4th!",
                            "barnbarn@lambdaschool.local");
         u3.getTodos()
-                .add(new Todos(u3,
-                               "Rearrange my hutch"));
+                .add(new UserTodos(u3,
+                               "Rearrange my hutch", false));
         userService.save(u3);
 
         User u4 = new User("puttat",
