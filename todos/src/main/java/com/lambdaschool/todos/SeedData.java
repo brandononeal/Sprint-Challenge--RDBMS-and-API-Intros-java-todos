@@ -1,8 +1,8 @@
 package com.lambdaschool.todos;
 
+import com.lambdaschool.todos.models.Todo;
 import com.lambdaschool.todos.models.User;
-import com.lambdaschool.todos.models.UserTodos;
-import com.lambdaschool.todos.services.TodoService;
+import com.lambdaschool.todos.repository.UserRepository;
 import com.lambdaschool.todos.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * SeedData puts both known and random data into the database. It implements CommandLineRunner.
  * <p>
- * CoomandLineRunner: Spring Boot automatically runs the run method once and only once
+ * CommandLineRunner: Spring Boot automatically runs the run method once and only once
  * after the application context has been loaded.
  */
 @Transactional
@@ -26,7 +26,7 @@ public class SeedData implements CommandLineRunner
     UserService userService;
 
     @Autowired
-    TodoService todoService;
+    UserRepository userrepos;
 
     /**
      * Generates test, seed data for our application
@@ -41,47 +41,49 @@ public class SeedData implements CommandLineRunner
     @Override
     public void run(String[] args) throws Exception
     {
+        userService.deleteAll();
+
         User u1 = new User("admin",
-                           "password",
-                           "admin@lambdaschool.local");
+            "password",
+            "admin@lambdaschool.local");
         u1.getTodos()
-                .add(new UserTodos(u1,
-                               "Give Joe access rights", false));
+            .add(new Todo(u1,
+                "Give Joe access rights"));
         u1.getTodos()
-                .add(new UserTodos(u1,
-                               "Change the color of the home page", false));
-        userService.save(u1);
+            .add(new Todo(u1,
+                "Change the color of the home page"));
+        userrepos.save(u1);
 
         User u2 = new User("cinnamon",
-                           "1234567",
-                           "cinnamon@lambdaschool.local");
+            "1234567",
+            "cinnamon@lambdaschool.local");
         u2.getTodos()
-                .add(new UserTodos(u2,
-                               "Take a nap", false));
+            .add(new Todo(u2,
+                "Take a nap"));
         u2.getTodos()
-                .add(new UserTodos(u2,
-                               "Rearrange my hutch", false));
+            .add(new Todo(u2,
+                "Rearrange my hutch"));
         u2.getTodos()
-                .add(new UserTodos(u2,
-                               "Groom my fur", false));
-        userService.save(u2);
+            .add(new Todo(u2,
+                "Groom my fur"));
+        userrepos.save(u2);
 
         User u3 = new User("barnbarn",
-                           "ILuvM4th!",
-                           "barnbarn@lambdaschool.local");
+            "ILuvM4th!",
+            "barnbarn@lambdaschool.local");
         u3.getTodos()
-                .add(new UserTodos(u3,
-                               "Rearrange my hutch", false));
-        userService.save(u3);
+            .add(new Todo(u3,
+                "Rearrange my hutch"));
+        userrepos.save(u3);
 
         User u4 = new User("puttat",
-                           "password",
-                           "puttat@school.lambda");
-        userService.save(u4);
+            "password",
+            "puttat@school.lambda");
+        userrepos.save(u4);
 
         User u5 = new User("misskitty",
-                           "password",
-                           "misskitty@school.lambda");
-        userService.save(u5);
+            "password",
+            "misskitty@school.lambda");
+        userrepos.save(u5);
     }
 }

@@ -48,4 +48,6 @@ public interface UserService
      * @return List of UserNameCountTodos
      */
     List<UserNameCountTodos> getCountUserTodos();
+
+    public void deleteAll();
 }

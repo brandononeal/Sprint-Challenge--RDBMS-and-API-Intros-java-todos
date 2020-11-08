@@ -1,5 +1,7 @@
 package com.lambdaschool.todos.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,12 +12,17 @@ public class Todo extends Auditable
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long todoid;
 
-    @ManyToOne
-    @JoinColumn(name = "userid")
-    private User user;
-
+    @Column
     private String description;
-    private boolean completed;
+
+    @Column
+    private boolean completed = false;
+
+    @ManyToOne
+    @JoinColumn(name = "userid",
+        nullable = false)
+    @JsonIgnoreProperties(value = "todos", allowSetters = true)
+    private User user;
 
     public Todo()
     {
@@ -23,12 +30,10 @@ public class Todo extends Auditable
 
     public Todo(
         User user,
-        String description,
-        boolean completed)
+        String description)
     {
         this.user = user;
         this.description = description;
-        this.completed = completed;
     }
 
     public long getTodoid()
