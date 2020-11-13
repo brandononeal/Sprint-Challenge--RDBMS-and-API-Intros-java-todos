@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService
         {
             Todo newTodo = new Todo();
 
-            newTodo.setUser(t.getUser());
+            newTodo.setUser(newUser);
             newTodo.setDescription(t.getDescription());
             newUser.getTodos().add(newTodo);
         }
